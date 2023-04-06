@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[pl_PL]=hardware info
+Name=hardware info
+Exec=/home/michal/Dokumenty/Rekrutacja/cpu_podejsice_1/src/main

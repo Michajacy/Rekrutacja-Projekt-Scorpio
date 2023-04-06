@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Hardware Info</title>
+	<style>
+		#table 
+        {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<h2 id="header">Use button below to access your hardware info</h2>
+
+	<button onclick="DataDownload()">Hardware Info</button>
+
+	<table id="table">
+		<thead>
+			<tr>
+				<th>Sprzet</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+	<script>
+
+		function startDataDownload()
+		{
+			DataDownload();
+			setInterval(DataDownload, 2000);
+			
+		}
+
+		function DataDownload() 
+        {
+            
+            document.getElementById("table").style.display = "block";
+
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+            {
+				if (this.readyState == 4 && this.status == 200) 
+                {
+                    document.getElementById("header").style.color = "blue";
+					var data = this.responseText.split("\n");
+					var table = document.getElementById("table").getElementsByTagName('tbody')[0];
+					table.innerHTML = "";
+
+					var table = document.getElementById("table").getElementsByTagName('tbody')[0];
+					while (table.rows.length > 0) 
+					{
+						table.deleteRow(0);
+					}
+
+						for (var i = 0; i < data.length; i++) 
+						{
+							if (data[i] !== "") 
+							{	
+
+								var row = table.insertRow(table.rows.length);
+								var cells = data[i].split("		");
+								var cell1 = row.insertCell(0);
+							
+								cell1.innerHTML = cells[0].replace("]", ":	").replace("_", " ");
+								
+							}
+							else
+							{
+								cell1.innerHTML = cells[0];
+							}
+							
+							document.getElementById("header").style.color = "green";
+						}
+  
+				}
+
+                if (this.status !== 200)
+                {console.log("HTTP Status " + this.status);}
+			};
+			xhttp.open("GET", "system_data_readings.txt", true);
+			xhttp.send();
+			
+		}
+	</script>
+</body>
+</html>
